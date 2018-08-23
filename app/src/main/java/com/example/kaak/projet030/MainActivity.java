@@ -1,10 +1,8 @@
 package com.example.kaak.projet030;
 
 import android.annotation.SuppressLint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
     Button viewHistory;
     RelativeLayout container;
 
-    int[] smileyImageTab = {R.drawable.smiley_happy, R.drawable.smiley_sad};
-    int position = 0;
+    int[] smileyImageTab = {R.drawable.smiley_sad, R.drawable.smiley_disappointed, R.drawable.smiley_normal, R.drawable.smiley_happy, R.drawable.smiley_super_happy};
+    int position = 3;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -38,16 +36,15 @@ public class MainActivity extends AppCompatActivity {
         container = (RelativeLayout) findViewById(R.id.container);
 
 
-
         ivSmley.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
 
             public void onSwipeTop() {
-                Toast.makeText(MainActivity.this, "top - "+position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "top - " + position, Toast.LENGTH_SHORT).show();
                 //humeur++;
-                if (position > 0) {
-                    position--;
+                if (position < smileyImageTab.length) {
+                    position++;
                     ivSmley.setImageResource(smileyImageTab[position]);
-                    container.setBackgroundResource(R.color.light_sage);
+                    container.setBackgroundResource(R.color.banana_yellow);
                 }
             }
 
@@ -60,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void onSwipeBottom() {
-                Toast.makeText(MainActivity.this, "bottom - "+position, Toast.LENGTH_SHORT).show();
-                if (position < smileyImageTab.length) {
-                    position++;
+                Toast.makeText(MainActivity.this, "bottom - " + position, Toast.LENGTH_SHORT).show();
+                if (position > 0) {
+                    position--;
                     ivSmley.setImageResource(smileyImageTab[position]);
-                    container.setBackgroundResource(R.color.banana_yellow);
+                    container.setBackgroundResource(R.color.light_sage);
                 }
             }
 
