@@ -1,7 +1,9 @@
 package com.example.kaak.projet030.controller;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -9,10 +11,13 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.kaak.projet030.R;
+import com.example.kaak.projet030.model.Humeur;
+
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
-
+//DialogBuilder
     ImageView ivSmley;
     Button viewCom;
     Button viewHistory;
@@ -39,7 +44,12 @@ public class MainActivity extends AppCompatActivity {
         //final RelativeLayout container = (RelativeLayout) findViewById(R.id.container);
         container = (RelativeLayout) findViewById(R.id.container);
 
+        long now = System.currentTimeMillis();
+        Date maDate = new Date(now);
+        System.out.println();
+        System.out.print(maDate);
 
+//android cheat sheet
         ivSmley.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
 
             public void onSwipeTop() {
@@ -105,4 +115,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+    /*
+    Pour sauvegarder une humeur i va falloir convertir l'humeur en String grâce à GSon.
+    Ensuite avec les prefs on enregistre la string.
+    Quand on voudra récupérer l'humeur, on récupèrera la string sauvegardée, puis grâce à GSon
+    on reconvertira en objet Humeur.
+
+    Il faudra peut-être enregistrer plusieurs humeurs. Pour cela on stockera d'abord les
+    humeurs soit dans un tableau, soit dans ce qu'on appelle un ArrayList
+     */
+
+    private void saveMood(Humeur humeur) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //d'abord sauvegarder en json (avec GSon) =>car ça renvoie une chaine de caractères
+            //String humeurConvertitEnStringJson = Gson.convertToJson(humeur);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("msgKey", humeurConvertitEnStringJson);
+        editor.apply();
+    }
+
+    private Humeur retrieveMood() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //si je voulais récupérer une valeur
+        String jsonMood = prefs.getString("msgKey", "valeur par défaut");
+        //convertir jsonMood en objet Humeur tout cela grâce à GSon
+    }
 }

@@ -1,15 +1,45 @@
 package com.example.kaak.projet030.model;
 
 public class Humeur {
-    private int laDate;
+    private long laDate;
     private int humeurDuJour;
     private String commentaireDuJour;
 
-    public Humeur(laDate,humeurDuJour,commentaireDuJour) {
-        this.laDate=laDate;
-        this.humeurDuJour=humeurDuJour;
-        this.commentaireDuJour=commentaireDuJour;
+    public Humeur(long laDate, int humeurDuJour, String commentaireDuJour) {
+        this.laDate = laDate;
+        this.humeurDuJour = humeurDuJour;
+        this.commentaireDuJour = commentaireDuJour;
 
+    }
+
+    public String convertJson() {
+        return "laDate: '"+laDate+"',"
+                +"humeurDuJour: '"+humeurDuJour+","
+                +"commentaireDuJour: '"+commentaireDuJour+"'";
+    }
+
+    public long getLaDate() {
+        return laDate;
+    }
+
+    public void setLaDate(long laDate) {
+        this.laDate = laDate;
+    }
+
+    public int getHumeurDuJour() {
+        return humeurDuJour;
+    }
+
+    public void setHumeurDuJour(int humeurDuJour) {
+        this.humeurDuJour = humeurDuJour;
+    }
+
+    public String getCommentaireDuJour() {
+        return commentaireDuJour;
+    }
+
+    public void setCommentaireDuJour(String commentaireDuJour) {
+        this.commentaireDuJour = commentaireDuJour;
     }
 
     @Override
@@ -20,4 +50,14 @@ public class Humeur {
                 ", commentaire du jour='" + commentaireDuJour + '\'' +
                 ']';
     }
+
+    /*{
+        nom: 'Martin',
+        date: '12/12/12',
+        adresse: {
+            rue: 'Rue de la lyre',
+            ville: 'Paris'
+        }
+        profession: ''
+    }*/
 }
