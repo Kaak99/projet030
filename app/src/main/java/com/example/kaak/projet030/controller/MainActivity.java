@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,16 +13,19 @@ import android.widget.Toast;
 
 import com.example.kaak.projet030.R;
 import com.example.kaak.projet030.model.Humeur;
+import com.google.gson.Gson;
 
 import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
-//DialogBuilder
+    //DialogBuilder
     ImageView ivSmley;
     Button viewCom;
     Button viewHistory;
     RelativeLayout container;
+    String monCom = "";
+    Humeur currentMood;
 
     int[] smileyImageTab = {R.drawable.smiley_sad, R.drawable.smiley_disappointed, R.drawable.smiley_normal, R.drawable.smiley_happy, R.drawable.smiley_super_happy};
     int position = 3;
@@ -49,17 +53,58 @@ public class MainActivity extends AppCompatActivity {
         System.out.println();
         System.out.print(maDate);
 
+        currentMood = new Humeur(System.currentTimeMillis(), position, "");
+        /*
+        viewCom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Rentrez vos commentaires ici");
+
+                // Set up the input
+                final EditText input = new EditText(this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                builder.setView(input);
+
+// Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        monCom = input.getText().toString();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+
+            }
+        });
+
+*/
+
+
 //android cheat sheet
         ivSmley.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
+
 
             public void onSwipeTop() {
 
                 //humeur++;
-                if (position < smileyImageTab.length -1) {
+                if (position < smileyImageTab.length - 1) {
                     position++;
                     Toast.makeText(MainActivity.this, "top - " + position, Toast.LENGTH_SHORT).show();
                     ivSmley.setImageResource(smileyImageTab[position]);
                     container.setBackgroundResource(smileyFondTab[position]);
+                    currentMood.setLaDate(System.currentTimeMillis());
+                    currentMood.setHumeurDuJour(position);
+
+                    //currentMood = new Humeur(System.currentTimeMillis(), position, "");
                 }
             }
 
@@ -78,52 +123,44 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "bottom - " + position, Toast.LENGTH_SHORT).show();
                     ivSmley.setImageResource(smileyImageTab[position]);
                     container.setBackgroundResource(smileyFondTab[position]);
-
+                    currentMood.setLaDate(System.currentTimeMillis());
+                    currentMood.setHumeurDuJour(position);
+                    //currentMood = new Humeur(System.currentTimeMillis(), position, "");
                 }
             }
 
         });
 
 
-        //public static interface GestureOverlayView.GestureDetector.OnGestureListener
-
-        //ivSmley.setImageResource(R.drawable.smiley_sad);
-        //container.setBackgroundColor("@color/banana_yellow");
-        //container.setBackgroundResource(R.color.banana_yellow);
-
-        //git remote add origin http://git....
-        //https://stackoverflow.com/questions/4139288/android-how-to-handle-right-to-left-swipe-gestures
-         /*
-        //On dit quoi faire quand on clique sur le bouton
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //button.setText("Coucou");
-                System.out.println("fin");
-            }
-        });
-        */
-
-        //ivSmley.setClickable(true);
-        //viewCom.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //   public void onClick(View v) {
-        //      Toast.makeText(this, "Coucou", Toast.LENGTH_LONG).show();
-        //  }
-        //});
-
-
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
 
+        //1. Convert object to JSON string
+        Gson gson = new Gson();
+        String json = gson.toJson(currentMood);
+        Log.d("", "json = " + json);
+
+        SharedPreferences prefs;
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("humeur1", json);
+        editor.apply();
     }
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
 
+        SharedPreferences prefs;
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String json = prefs.getString("humeur1", "");
+        if (!json.equals("")) {
+            Gson gson = new Gson();
+            currentMood = gson.fromJson(json, Humeur.class);
+        }
     /*
     Pour sauvegarder une humeur i va falloir convertir l'humeur en String grâce à GSon.
     Ensuite avec les prefs on enregistre la string.
@@ -134,21 +171,42 @@ public class MainActivity extends AppCompatActivity {
     humeurs soit dans un tableau, soit dans ce qu'on appelle un ArrayList
      */
 
-    private void saveMood(Humeur humeur) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        //d'abord sauvegarder en json (avec GSon) =>car ça renvoie une chaine de caractères
-            //String humeurConvertitEnStringJson = Gson.convertToJson(humeur);
+        //
 
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("msgKey", humeurConvertitEnStringJson);
-        editor.apply();
-    }
+        //private void saveMood (Humeur humeur){
 
-    private Humeur retrieveMood() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //si je voulais récupérer une valeur
-        String jsonMood = prefs.getString("msgKey", "valeur par défaut");
-        //convertir jsonMood en objet Humeur tout cela grâce à GSon
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //
+
+        ////d'abord sauvegarder en json (avec GSon) =>car ça renvoie une chaine de caractères
+
+        ////String humeurConvertitEnStringJson = Gson.convertToJson(humeur);
+
+        //
+
+        //SharedPreferences.Editor editor = prefs.edit();
+
+        //editor.putString("msgKey", humeurConvertitEnStringJson);
+
+        //editor.apply();
+
+        //}
+
+        //
+
+        //private Humeur retrieveMood () {
+
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        ////si je voulais récupérer une valeur
+
+        //String jsonMood = prefs.getString("msgKey", "valeur par défaut");
+
+        ////convertir jsonMood en objet Humeur tout cela grâce à GSon
+
+        //
+
     }
 }

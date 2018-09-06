@@ -12,11 +12,6 @@ public class Humeur {
 
     }
 
-    public String convertJson() {
-        return "laDate: '"+laDate+"',"
-                +"humeurDuJour: '"+humeurDuJour+","
-                +"commentaireDuJour: '"+commentaireDuJour+"'";
-    }
 
     public long getLaDate() {
         return laDate;
