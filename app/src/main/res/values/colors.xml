@@ -10,5 +10,11 @@
     <color name="cornflower_blue_65">#a5468ad9</color>
     <color name="light_sage">#ffb8e986</color>
     <color name="banana_yellow">#fff9ec4f</color>
+    <color name="rouge_ka1">#D93E49</color>
+    <color name="bleu_ka1">#356FE2</color>
+    <color name="vert_ka1">#40A497</color>
+    <color name="mauve_ka1">#955BD7</color>
+    <color name="noir_ka1">#000</color>
+    <color name="blanc_ka1">#F3F3E9</color>
 
 </resources>

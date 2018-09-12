@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerCom"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bleu_ka1"
+    android:orientation="vertical"
+    tools:context=".EcrireCom">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bleu_ka1"
+        android:orientation="vertical"
+        >
+
+        <TextView
+        android:id="@+id/tcCom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/mauve_ka1"
+        android:gravity="center"
+        android:padding="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/tvCom" />
+
+    <EditText
+        android:id="@+id/etCom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/blanc_ka1"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+
+        android:hint="Write your comment here..."
+        android:padding="10dp" />
+
+    </LinearLayout>
+
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bleu_ka1"
+        android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/btnComOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:layout_weight="3"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text=" OK "
+        android:textStyle="bold"/>
+
+
+    <Button
+        android:id="@+id/btnComCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text=" Cancel " />
+
+
+</LinearLayout>
+
+
+</LinearLayout>

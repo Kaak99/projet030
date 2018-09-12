@@ -1,16 +1,19 @@
 package com.example.kaak.projet030.controller;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.kaak.projet030.EcrireCom;
 import com.example.kaak.projet030.R;
 import com.example.kaak.projet030.model.Humeur;
 import com.google.gson.Gson;
@@ -54,6 +57,15 @@ public class MainActivity extends AppCompatActivity {
         System.out.print(maDate);
 
         currentMood = new Humeur(System.currentTimeMillis(), position, "");
+
+        viewCom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent comActivity=new Intent(getApplicationContext(),EcrireCom.class);
+                startActivity(comActivity);
+
+            }
+        });
         /*
         viewCom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
                     //currentMood = new Humeur(System.currentTimeMillis(), position, "");
                 }
             }
+
+
 
         });
 
