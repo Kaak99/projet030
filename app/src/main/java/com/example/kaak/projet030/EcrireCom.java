@@ -1,10 +1,14 @@
 package com.example.kaak.projet030;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.kaak.projet030.controller.MainActivity;
 
 public class EcrireCom extends AppCompatActivity {
 
@@ -26,8 +30,10 @@ etCom=findViewById(R.id.etCom);
 btnComOK.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-      //  comDuJour=etCom.getText();
-
+      comDuJour=etCom.getText().toString();
+        Toast.makeText(EcrireCom.this, "le com du jour est " + comDuJour, Toast.LENGTH_SHORT).show();
+        Intent mainActivity=new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(mainActivity);
 
     }
 });
