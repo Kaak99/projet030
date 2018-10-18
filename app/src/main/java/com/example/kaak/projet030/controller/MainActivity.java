@@ -1,6 +1,8 @@
 package com.example.kaak.projet030.controller;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout container;
     String monCom = "";
     Humeur currentMood;
+    //String[] humeurX={"humeur0","humeur1","humeur2", "humeur3", "humeur4", "humeur5", "humeur6"};
+
 
     int[] smileyImageTab = {R.drawable.smiley_sad, R.drawable.smiley_disappointed, R.drawable.smiley_normal, R.drawable.smiley_happy, R.drawable.smiley_super_happy};
     int position = 3;
@@ -61,11 +66,35 @@ public class MainActivity extends AppCompatActivity {
         viewCom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent comActivity=new Intent(getApplicationContext(),EcrireCom.class);
+                Intent comActivity = new Intent(getApplicationContext(), EcrireCom.class);
+                comActivity.putExtra("numero", 5);
                 startActivity(comActivity);
 
+//currentMood.setComDuJour;
             }
         });
+
+
+        /*final EditText etCom;
+        Button btnCom;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Commentaire");
+        etCom = new EditText(this);
+        builder.setView(etCom);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String text = etCom.getText().toString();
+            }
+        })
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String text = etCom.getText().toString();
+            }
+        })
+*/
+
         /*
         viewCom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-
         });
 
 
@@ -155,14 +183,17 @@ public class MainActivity extends AppCompatActivity {
         //1. Convert object to JSON string
         Gson gson = new Gson();
         String json = gson.toJson(currentMood);
-        Log.d("", "json = " + json);
+        Log.d("", "json = " + json); //permet de verifier ds logcat?
 
         SharedPreferences prefs;
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("humeur1", json);
+        editor.putString("humeur1", json);//humeurX(i)
         editor.apply();
+
+        //System.exit(0);
     }
+
 
     @Override
     protected void onResume() {
